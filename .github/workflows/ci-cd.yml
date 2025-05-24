@@ -1,0 +1,63 @@
+name: Python CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint with flake8
+      run: |
+        # Detener el build si hay errores de Python sintaxis
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # Salidas de advertencias de estilo de código
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        # Crear un archivo de prueba simple para verificar que el código se puede importar
+        echo "from scraping import *; print('Import test passed!')" > test_import.py
+        python test_import.py
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install nbconvert jupyter
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Generate documentation
+      run: |
+        # Convertir notebook a HTML
+        jupyter nbconvert --to html scraping.ipynb
+        # Crear directorio de docs
+        mkdir -p docs
+        mv scraping.html docs/index.html
+        # Copiar README a docs
+        cp README.md docs/
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs

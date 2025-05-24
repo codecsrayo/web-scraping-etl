@@ -1,1 +1,35 @@
+# Entornos virtuales
 venv/
+env/
+.env/
+
+# Archivos de caché de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribución / empaquetado
+dist/
+build/
+*.egg-info/
+
+# Archivos de Jupyter Notebook
+.ipynb_checkpoints
+
+# Archivos de análisis de datos
+*.csv
+*.xlsx
+*.html
+pagina_*.html
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de registro
+*.log
+
+# Archivos de configuración local
+.env
+.vscode/
+.idea/
