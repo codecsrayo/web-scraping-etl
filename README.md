@@ -24,14 +24,14 @@ El proyecto utiliza las siguientes tecnologías y técnicas:
 ## Instalación y Uso
 ```bash
 # Clonar el repositorio
-git clone https://github.com/codecsrayo/S1.git
-cd S1
+git clone https://github.com/codecsrayo/web-scraping-etl.git
+cd web-scraping-etl.git
 
 # Instalar dependencias
 pip install -r requirements.txt
 
 # Ejecutar el script de scraping
-python scraping.py
+python scraping_module.py
 ```
 
 ## Resultados y Conclusiones
