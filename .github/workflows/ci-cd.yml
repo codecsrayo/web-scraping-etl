@@ -55,8 +55,23 @@ jobs:
         # Copiar README a docs
         cp README.md docs/
     - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+      # En lugar de usar peaceiris/actions-gh-pages, usaremos un enfoque más simple
+      # que funcionará con los permisos predeterminados
       if: github.ref == 'refs/heads/main'
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs
+      run: |
+        # Configurar identidad de Git
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        
+        # Crear y preparar la rama gh-pages localmente
+        git checkout --orphan gh-pages
+        git reset --hard
+        cp -r docs/* .
+        rm -rf docs
+        
+        # Agregar los archivos y hacer commit
+        git add .
+        git commit -m "Deploy documentation to GitHub Pages"
+        
+        # Forzar el push utilizando el token de GitHub con formato adecuado
+        git push -f https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
