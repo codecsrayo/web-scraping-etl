@@ -20,6 +20,7 @@ build/
 *.csv
 *.xlsx
 *.html
+!docs/*.html
 pagina_*.html
 
 # Archivos del sistema operativo
