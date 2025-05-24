@@ -28,9 +28,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        # Crear un archivo de prueba simple para verificar que el código se puede importar
-        echo "from scraping import *; print('Import test passed!')" > test_import.py
-        python test_import.py
+        # Ejecutar las pruebas desde el directorio test/
+        python -m unittest discover -s test
 
   build:
     needs: test
