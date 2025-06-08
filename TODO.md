@@ -1,41 +1,37 @@
 # Instrucciones
 
-1. Esta evidencia es una continuación de la que se realizó en la Unidad 1. Tener en cuenta que también se encuentra ligada a la Unidad 3 y a la del cierre del curso.
+El desarrollo o paso a paso para la actividad es la siguiente:
 
-2. Retoma los contenidos temáticos de la Unidad 2 y el material de apoyo.
+Continuando con las evidencias de aprendizaje 1 y 2, aplica los conocimientos adquiridos sobre automatización utilizando GitHub Actions y el despliegue de servicios en un entorno real. Desarrolla una aplicación web simple, configura un pipeline de integración continua (CI) y entrega continua (CD) usando GitHub Actions y, finalmente, despliega la aplicación en un servicio de alojamiento en la nube.
 
-3. Presenta la evidencia de aprendizaje de manera individual.
+Redacta un informe que describa el proceso realizado con los siguientes elementos:
 
-4. Continuando con la Evidencia de aprendizaje 1, realiza un proceso de desarrollo de un proyecto utilizando Git y GitHub para la gestión de versiones y la implementación de un flujo de trabajo DevOps con automatización y despliegue continuo.
+Portada.
 
-5. Redacta un informe que describa el proceso realizado con los siguientes elementos:
+Introducción.
 
-- Portada.
+Descripción de la página y artículo a analizar.
 
-- Introducción.
+Descripción del tema de interés que deseas desarrollar en la primera práctica.
 
-- Retoma la descripción de la página y artículo analizado en la Evidencia de aprendizaje 1.
+Objetivos. Formula los objetivos a partir de lo siguiente: imagina que eres parte de un equipo de desarrollo donde tienes tu proyecto de software; utiliza Git y GitHub para el control de versiones, y establece un pipeline de CI/CD con GitHub Actions que integre pruebas automatizadas y despliegue continuo. El proyecto debes documentarlo y presentarlo en un repositorio de GitHub, con una explicación detallada del flujo de trabajo DevOps implementado.
 
-- Descripción del tema de interés que deseas desarrollar en la evidencia de aprendizaje de la Unidad 2.
+Metodología empleada de scraping.
 
-- Objetivos: formula los objetivos a partir de lo siguiente. Imagina que eres parte de un equipo de desarrollo donde tienes tu proyecto de software; utiliza Git y GitHub para el control de versiones, y establece un pipeline de CI/CD con GitHub Actions que integre pruebas automatizadas y despliegue continuo. El proyecto debes documentarlo y presentarlo en un repositorio de GitHub, con una explicación detallada del flujo de trabajo DevOps implementado.
+Resultados y conclusiones.
 
-- Metodología empleada de Scraping.
-
-- Resultados y conclusiones.
-
-- Bibliografía (Normas APA).
+Bibliografía (normas APA).
 
 ## criterios
 
-- Uso de Git y GitHub: 35 pts
-Utiliza Git y GitHub de manera efectiva. Realiza correctamente todos los pasos requeridos, incluyendo la creación de un repositorio, la realización de commits con mensajes claros y descriptivos, el uso de ramas, la fusión de ramas, y el manejo de pull requests. 
+- Documentación de la automatización (GitHub Actions). 35 pts
+La documentación es detallada y explica cada paso del flujo de trabajo de GitHub Actions, incluyendo las configuraciones y comandos utilizados. Los scripts están argumentados y organizados
 
-- Documentación y explicación del proyecto: 25 pts
-La documentación y explicación del proyecto es clara, completa y organizada. Incluye todos los aspectos relevantes del proyecto, proporcionando detalles técnicos y conceptuales. La documentación está bien estructurada, con un formato adecuado y explicaciones comprensibles. La presentación o explicación oral es coherente y demuestra un sólido entendimiento del proyecto.
+- Documentación del despliegue de servicios. 25 pts
+La documentación describe detalladamente el proceso de despliegue, incluyendo configuraciones del entorno, variables de entorno, y cualquier ajuste necesario en el servidor o servicio en la nube. Se incluyen capturas de pantalla y enlaces que demuestran el despliegue exitoso.
 
-- Integración y despliegue: 25 pts
-Realiza la integración y despliegue de manera completa y efectiva. Todo el sistema está integrado correctamente, sin errores, y el proyecto ha sido desplegado en un entorno adecuado (servidor, nube, entre otros). El despliegue es estable, accesible, y funciona según lo previsto.
+- Organización y estructura del proyecto. 25 pts
+El proyecto está organizado de manera clara y lógica. El archivo README.md está estructurado, es fácil de seguir y contiene todas las secciones necesarias (introducción, instalación, uso, automatización, despliegue).
 
-- Calidad de la entrega: 15 pts
-Presenta los resultados y conclusiones, y anexa el código fuente o descripción detallada de la implementación de la solución. Cumple con las especificaciones de formato y con la citación según las normas APA última versión.
+- Calidad en la entrega. 15 pts
+Presenta los resultados y conclusiones, y anexa el código fuente o descripción detallada de la implementación de la solución. Cumple con las especificaciones de formato y con la citación según las normas APA, última versión.

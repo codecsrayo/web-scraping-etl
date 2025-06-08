@@ -1,0 +1,9 @@
+[build]
+  publish = "docs"
+  command = ""
+
+# Redireccionar /scraping a /scraping.html
+[[redirects]]
+  from = "/scraping"
+  to = "/scraping.html"
+  status = 200
