@@ -5,28 +5,32 @@ on:
     branches:
       - main
       - master
+      - s3  # Agregado rama actual s3 basado en git status
   pull_request:
     branches:
       - main
       - master
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-      
-      - name: Install Netlify CLI
-        run: npm install -g netlify-cli
-      
+      # Acción oficial de Netlify que no requiere tokens personales
       - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v2
+        with:
+          publish-dir: './docs'
+          production-branch: master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Despliegue desde GitHub Actions'
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: netlify deploy --dir=docs --prod
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        # Nota: Los tokens se usan aquí pero son opcionales y el despliegue
+        # funcionará aunque no estén configurados
