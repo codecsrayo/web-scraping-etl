@@ -1,8 +1,5 @@
 # Análisis de Computadores Portátiles en Mercado Libre Colombia
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/YOUR-NETLIFY-APP-ID/deploy-status)](https://app.netlify.com/sites/YOUR-SITE-NAME/deploys)
-[![CI Tests](https://github.com/codecsrayo/web-scraping-etl/actions/workflows/tests.yml/badge.svg)](https://github.com/codecsrayo/web-scraping-etl/actions/workflows/tests.yml)
-
 ## Descripción
 Este proyecto implementa técnicas de web scraping para extraer información sobre computadores portátiles disponibles en Mercado Libre Colombia. El objetivo es analizar tendencias de precios, marcas populares, configuraciones comunes y otros patrones en el mercado de laptops en Colombia.
 
@@ -59,7 +56,7 @@ Este proyecto implementa un pipeline de CI/CD utilizando GitHub Actions que:
 ## Despliegue
 Los resultados del análisis y la documentación están disponibles en línea:
 
-- **URL del proyecto**: [https://your-site-name.netlify.app](https://your-site-name.netlify.app)
+- **URL del proyecto**: [https://sparkly-nasturtium-c2e569.netlify.app/](https://sparkly-nasturtium-c2e569.netlify.app/)
 - **Estado del despliegue**: Ver el badge de Netlify al principio de este README
 
 Consulta [DEPLOYMENT.md](./DEPLOYMENT.md) para obtener información detallada sobre el proceso de CI/CD y despliegue.
