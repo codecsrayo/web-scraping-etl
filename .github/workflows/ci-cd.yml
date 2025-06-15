@@ -53,12 +53,60 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Execute notebook and generate documentation
       run: |
-        # Ejecutar el notebook actualizando datos
-        papermill scraping.ipynb scraping_executed.ipynb
+        echo "======== PREPARANDO ENTORNO DE EJECUCIÓN ========"
+        # Mostrar versión de Python y paquetes instalados
+        python --version
+        pip list | grep -E "papermill|jupyter|pandas|matplotlib|seaborn|beautifulsoup4|requests"
         
+        echo "\n======== CONTENIDO DEL NOTEBOOK ANTES DE EJECUTAR ========"
+        # Mostrar primeras 20 líneas del notebook para verificar
+        head -n 20 scraping.ipynb
+        
+        echo "\n======== EJECUTANDO NOTEBOOK CON PAPERMILL ========"
+        # Ejecutar el notebook con verbose para mostrar más información
+        papermill --log-level INFO scraping.ipynb scraping_executed.ipynb
+        
+        echo "\n======== VERIFICANDO EJECUCIÓN DEL NOTEBOOK ========"
+        # Comprobar que el notebook ejecutado existe
+        ls -la scraping_executed.ipynb
+        
+        echo "\n======== EXTRAYENDO INFORMACIÓN DE EJECUCIÓN ========"
+        # Extraer parte del notebook ejecutado para verificar
+        python -c "import json; nb = json.load(open('scraping_executed.ipynb')); print('Celdas con output:', sum(1 for cell in nb['cells'] if 'outputs' in cell and cell['outputs']))"
+        
+        echo "\n======== CONVERTIR NOTEBOOK A HTML ========"
         # Convertir notebook a HTML
         jupyter nbconvert --to html scraping_executed.ipynb --output scraping.html
+        ls -la scraping.html
         
+        echo "\n======== VERIFICANDO ARCHIVOS GENERADOS ========"
+        # Listar archivos en el directorio para ver qué se generó
+        ls -la
+        
+        # Verificar si existe el CSV de datos
+        if [ -f laptops_data.csv ]; then
+          echo "\nArchivo laptops_data.csv encontrado:"
+          echo "Tamaño: $(du -h laptops_data.csv | cut -f1)"
+          echo "Primeras líneas:"
+          head -n 3 laptops_data.csv
+        else
+          echo "ADVERTENCIA: No se encontró el archivo laptops_data.csv"
+          # Intentar ejecutar directamente el módulo de scraping
+          echo "Intentando ejecutar scraping_module.py para generar datos..."
+          python scraping_module.py || echo "Error al ejecutar scraping_module.py"
+        fi
+        
+        # Verificar si existen las imágenes
+        echo "\nVerificando imágenes generadas:"
+        for img in precio_distribucion.png precio_por_marca.png distribucion_ubicacion.png; do
+          if [ -f "$img" ]; then
+            echo "$img encontrado ($(du -h "$img" | cut -f1))"
+          else
+            echo "ADVERTENCIA: No se encontró $img"
+          fi
+        done
+        
+        echo "\n======== PREPARANDO DOCUMENTACIÓN ========"
         # Crear directorio de docs
         mkdir -p docs
         mv scraping.html docs/index.html
@@ -67,20 +115,53 @@ jobs:
         cp README.md docs/
         
         # Copiar archivos generados (CSV e imágenes) a docs
-        if [ -f laptops_data.csv ]; then cp laptops_data.csv docs/; fi
+        echo "\nCopiando archivos a docs/:"
+        if [ -f laptops_data.csv ]; then 
+          cp laptops_data.csv docs/
+          echo "- laptops_data.csv copiado"
+        else
+          echo "- ADVERTENCIA: laptops_data.csv no disponible"
+        fi
+        
         for img in precio_distribucion.png precio_por_marca.png distribucion_ubicacion.png; do
-          if [ -f $img ]; then cp $img docs/; fi
+          if [ -f "$img" ]; then
+            cp "$img" docs/
+            echo "- $img copiado"
+          else
+            echo "- ADVERTENCIA: $img no disponible"
+          fi
         done
         
-        # Opcional: Crear un archivo de índice para acceder fácilmente a los datos
+        # Crear archivo de índice con información de ejecución
+        echo "\n======== CREANDO DOCUMENTACIÓN DE LA EJECUCIÓN ========"
         echo "# Datos de Laptops Actualizados" > docs/data_links.md
         echo "Última actualización: $(date)" >> docs/data_links.md
         echo "" >> docs/data_links.md
+        echo "## Información de ejecución" >> docs/data_links.md
+        echo "Este notebook fue ejecutado automáticamente por GitHub Actions el $(date)." >> docs/data_links.md
+        echo "" >> docs/data_links.md
         echo "## Archivos disponibles" >> docs/data_links.md
-        echo "- [Datos en formato CSV](laptops_data.csv)" >> docs/data_links.md
-        echo "- [Distribución de precios](precio_distribucion.png)" >> docs/data_links.md
-        echo "- [Precio por marca](precio_por_marca.png)" >> docs/data_links.md
-        echo "- [Distribución por ubicación](distribucion_ubicacion.png)" >> docs/data_links.md
+        echo "- [Notebook ejecutado (HTML)](index.html)" >> docs/data_links.md
+        
+        if [ -f docs/laptops_data.csv ]; then
+          echo "- [Datos en formato CSV](laptops_data.csv)" >> docs/data_links.md
+        else 
+          echo "- Datos CSV: No generados en esta ejecución" >> docs/data_links.md
+        fi
+        
+        for img in precio_distribucion.png precio_por_marca.png distribucion_ubicacion.png; do
+          if [ -f "docs/$img" ]; then
+            echo "- [$(echo $img | sed 's/_/ /g' | sed 's/\.png//')](/home/ubuntu/2025/II/Programación para Análisis de Datos (andres felipe callejas) - PREICA2501B020065/S1/$img)" >> docs/data_links.md
+          fi
+        done
+        
+        # Mostrar contenido final del directorio docs
+        echo "\n======== CONTENIDO FINAL DEL DIRECTORIO DOCS ========"
+        ls -la docs/
+        
+        # Confirmar si los archivos en docs/ serán reconocidos por git
+        echo "\n======== ESTADO DE GIT PARA ARCHIVOS EN DOCS ========"
+        git status docs/
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main'
       uses: JamesIves/github-pages-deploy-action@v4
